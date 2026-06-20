@@ -1,0 +1,104 @@
+scalar ObjectId
+scalar ID
+
+type Buch {
+  _id: ObjectId!
+  titel: String!
+  openLibraryKey: String
+  erscheinungsjahr: Int
+  autor: ObjectId!
+  beschreibung: String
+  coverBild: String
+  durchschnittsBewertung: Float
+  anzahlBewertungen: Int
+  lookupAutor: Autor
+}
+type OeffentlichesBuch {
+  openLibraryKey: String!
+  titel: String!
+  autorName: String!
+  erscheinungsjahr: Int
+  coverBild: String
+}
+
+type Autor {
+  _id: ObjectId!
+  name: String!
+  vorname: String!
+  geburtsdatum: String
+  land: String
+  buecher: [Buch]
+}
+
+enum BenutzerRolle {
+  USER
+  ADMIN
+}
+
+type User {
+  rolle: BenutzerRolle!
+  _id: ObjectId!
+  name: String!
+  vorname: String!
+  email: String!
+  persoenlicheListe: [Buch]
+}
+
+type Query {
+  alleBuecher(language: String, limit: Int, offset: Int, q: String): [Buch]
+  alleAutoren: [Autor]
+  gibEinAutor(id: ObjectId!): Autor
+  buecherAnzahl(autorId: ObjectId, q: String): Int!
+  meMitLookups: User
+  gibEinBuch(buchId: ObjectId!): Buch
+  oeffentlicheBuecherSuchen(suchbegriff: String!): [OeffentlichesBuch!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Mutation {
+  registrieren(
+    name: String!
+    vorname: String!
+    email: String!
+    password: String!
+  ): User
+
+  einloggen(email: String!, password: String!): AuthPayload
+
+  buchHinzufuegen(titel: String!, autorId: ObjectId!): User
+
+  buchLoeschen(id: ObjectId!): String
+
+  bewerteBuch(buchId: ObjectId!, bewertung: Int!): Buch
+
+  oeffentlichesBuchUebernehmen(
+   openLibraryKey: String!
+   titel: String!
+   autorName: String!
+   coverBild: String
+   erscheinungsjahr: Int
+  ): Buch!
+
+  autorHinzufuegen(
+    name: String!
+    vorname: String!
+    geburtsdatum: String
+    land: String
+  ): Autor
+
+  buchZuFavoritenHinzufuegen(buchId: ObjectId!): BuchZuFavoritenResponse!
+
+  buchAusFavoritenEntfernen(buchId: ObjectId!): ErfolgMessage
+}
+
+type BuchZuFavoritenResponse {
+  message: String!
+  user: User!
+}
+type ErfolgMessage {
+  message: String!
+}
