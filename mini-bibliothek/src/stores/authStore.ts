@@ -1,7 +1,11 @@
 import type { IBuch, IUser } from "@/types/models";
 import { defineStore } from "pinia";
 
-const GRAPHQL_ENDPOINT = "http://localhost:4000/graphql";
+
+const GRAPHQL_ENDPOINT =
+  import.meta.env.VITE_GRAPHQL_ENDPOINT ||
+  "http://localhost:4000/graphql";
+
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({

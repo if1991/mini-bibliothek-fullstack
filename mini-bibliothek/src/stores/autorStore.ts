@@ -5,7 +5,12 @@ interface IAutorState {
   autoren: IAutor[]
 }
 
-const GRAPHQL_ENDPOINT = "http://localhost:4000/graphql";
+
+const GRAPHQL_ENDPOINT =
+  import.meta.env.VITE_GRAPHQL_ENDPOINT ||
+  "http://localhost:4000/graphql";
+
+
 
 export const useAutorStore = defineStore("autor", {
   state: (): IAutorState => ({
