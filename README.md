@@ -2,9 +2,6 @@
 
 
 
-Eine responsive Fullstack-Webanwendung zur Verwaltung, Suche und Bewertung von Büchern.
-
-
 
 Die Mini-Bibliothek ermöglicht es Gästen, die vorhandene Büchersammlung und Autoren zu durchsuchen. Registrierte Nutzer können persönliche Favoriten speichern und Bücher bewerten. Administratoren besitzen zusätzlich Funktionen zur Verwaltung und Erweiterung des Buchbestands.
 
